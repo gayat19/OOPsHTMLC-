@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C# OOP Concepts - Banking Project Learning Slides</title>
+  <style>
+    :root{
+      --bg:#0f172a;--panel:#111827;--card:#ffffff;--ink:#172033;--muted:#64748b;--brand:#7c3aed;--brand2:#06b6d4;--accent:#f97316;--green:#16a34a;--red:#dc2626;--soft:#f8fafc;--line:#e2e8f0;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(135deg,#0f172a,#312e81 45%,#0e7490);color:var(--ink);line-height:1.6}
+    .topbar{position:sticky;top:0;z-index:10;background:rgba(15,23,42,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.12)}
+    .nav{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 18px;color:white}.nav strong{font-size:18px}.nav a{color:#e0f2fe;text-decoration:none;margin-left:14px;font-size:14px}.nav a:hover{color:white}
+    .hero{max-width:1180px;margin:0 auto;padding:70px 20px 35px;color:white}.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}.badge{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:7px 12px;border-radius:999px;font-weight:700;font-size:13px}.hero h1{font-size:clamp(34px,5vw,64px);line-height:1.05;margin:18px 0}.hero p{font-size:19px;color:#dbeafe;max-width:760px}.hero-card{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:26px;padding:24px;box-shadow:0 25px 80px rgba(0,0,0,.25)}
+    .pillrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.pill{background:white;color:#312e81;border-radius:999px;padding:8px 12px;font-weight:800;font-size:13px}
+    main{max-width:1180px;margin:0 auto 60px;padding:0 20px}.slide{background:var(--card);border-radius:30px;margin:28px 0;padding:34px;box-shadow:0 24px 60px rgba(2,6,23,.18);border:1px solid rgba(226,232,240,.8)}
+    .slide-title{display:flex;align-items:center;gap:14px;margin-bottom:12px}.num{min-width:44px;height:44px;border-radius:16px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:white;display:grid;place-items:center;font-weight:900}.slide h2{font-size:32px;margin:0}.slide h3{font-size:22px;margin:24px 0 8px;color:#312e81}.lead{font-size:18px;color:#475569}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.mini{background:var(--soft);border:1px solid var(--line);border-radius:20px;padding:20px}.mini h4{margin:0 0 8px;color:#0f172a}.callout{border-left:6px solid var(--brand);background:#f5f3ff;border-radius:18px;padding:18px;margin:16px 0}.warning{border-left-color:var(--accent);background:#fff7ed}.success{border-left-color:var(--green);background:#f0fdf4}
+    pre{background:#0b1020;color:#e5e7eb;border-radius:18px;padding:18px;overflow:auto;font-size:14px;line-height:1.55;border:1px solid #1e293b} code{font-family:Cascadia Code,Consolas,monospace}.keyword{color:#93c5fd}.comment{color:#94a3b8}.string{color:#fde68a}.table{width:100%;border-collapse:collapse;margin-top:12px}.table th,.table td{border:1px solid var(--line);padding:12px;text-align:left;vertical-align:top}.table th{background:#eef2ff;color:#312e81}.diagram{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:18px 0}.box{background:#eef2ff;border:2px solid #c7d2fe;border-radius:16px;padding:14px 16px;font-weight:800;color:#312e81}.arrow{font-size:24px;color:#64748b}
+    .quiz{background:#f8fafc;border:1px solid var(--line);border-radius:20px;padding:18px;margin:14px 0}.quiz p{font-weight:800;margin-top:0}.quiz label{display:block;background:white;border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0;cursor:pointer}.quiz label:hover{border-color:#a78bfa}.btn{border:0;background:linear-gradient(135deg,var(--brand),var(--brand2));color:white;font-weight:900;padding:12px 18px;border-radius:14px;cursor:pointer}.result{font-weight:900;margin-top:12px}.footer{color:white;text-align:center;padding:40px 20px 70px}.small{font-size:13px;color:#64748b}.toc{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}.toc a{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);color:white;text-decoration:none;border-radius:16px;padding:13px;font-weight:800}.toc a:hover{background:rgba(255,255,255,.24)}
+    @media(max-width:850px){.hero-grid,.grid,.grid3{grid-template-columns:1fr}.toc{grid-template-columns:1fr 1fr}.nav{display:block}.nav a{display:inline-block;margin:8px 8px 0 0}.slide{padding:24px}.hero{padding-top:38px}}
+  </style>
+</head>
+<body>
+  <div class="topbar"><div class="nav"><strong>Understanding OOPS App - C# Learning Slides</strong><div><a href="#overview">Overview</a><a href="#concepts">Concepts</a><a href="#quiz">Quiz</a><a href="#summary">Summary</a></div></div></div>
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <span class="badge">C# • .NET 8 • Banking Console Project</span>
+        <h1>Object-Oriented Programming Concepts Explained with Your Project</h1>
+        <p>This slide-style HTML page explains OOP concepts using the uploaded <b>UnderstandingOOPSApp</b> banking example: accounts, savings/current account types, repository pattern, services, interfaces, indexers, constructors, polymorphism, abstraction, encapsulation, and more.</p>
+        <div class="pillrow"><span class="pill">Classes</span><span class="pill">Objects</span><span class="pill">Inheritance</span><span class="pill">Interfaces</span><span class="pill">Abstract Classes</span><span class="pill">Indexer</span><span class="pill">Polymorphism</span></div>
+      </div>
+      <div class="hero-card">
+        <h2 style="margin-top:0;color:white">Project Story</h2>
+        <p>A customer opens a bank account. The app decides whether it is a Savings or Current account, stores the account, and prints details. This is a perfect small project to teach OOP.</p>
+        <div class="diagram"><span class="box">Customer</span><span class="arrow">→</span><span class="box">Service</span><span class="arrow">→</span><span class="box">Account</span><span class="arrow">→</span><span class="box">Repository</span></div>
+      </div>
+    </div>
+    <div class="toc">
+      <a href="#class-object">Class & Object</a><a href="#constructor">Constructor</a><a href="#encapsulation">Encapsulation</a><a href="#inheritance">Inheritance</a><a href="#polymorphism">Polymorphism</a><a href="#interfaces">Interfaces</a><a href="#abstract">Abstract Class</a><a href="#indexer">Indexer</a>
+    </div>
+  </section>
+
+  <main>
+    <section id="overview" class="slide">
+      <div class="slide-title"><div class="num">01</div><h2>Project Overview</h2></div>
+      <p class="lead">Your project uses a simple banking domain to show OOP concepts in a practical way.</p>
+      <div class="grid3">
+        <div class="mini"><h4>Models</h4><p><b>Account</b>, <b>SavingAccount</b>, and <b>CurrentAccount</b> represent business entities.</p></div>
+        <div class="mini"><h4>Interfaces</h4><p><b>ICustomerInteract</b> and <b>IRepository&lt;K,T&gt;</b> define contracts.</p></div>
+        <div class="mini"><h4>Repositories & Services</h4><p><b>AbstractRepository</b>, <b>AccountRepository</b>, and <b>CustomerService</b> separate responsibilities.</p></div>
+      </div>
+      <h3>High-level architecture</h3>
+      <div class="diagram"><span class="box">Program.cs</span><span class="arrow">→</span><span class="box">ICustomerInteract</span><span class="arrow">→</span><span class="box">CustomerService</span><span class="arrow">→</span><span class="box">Account / Repository</span></div>
+    </section>
+
+    <section id="class-object" class="slide">
+      <div class="slide-title"><div class="num">02</div><h2>Class and Object</h2></div>
+      <p class="lead">A <b>class</b> is a blueprint. An <b>object</b> is a real instance created from that blueprint.</p>
+      <div class="grid">
+        <div><h3>In your project</h3><pre><code>internal partial class Account
+{
+    public string AccountNumber { get; set; }
+    public string NameOnAccount { get; set; }
+    public float Balance { get; set; }
+}</code></pre></div>
+        <div><h3>Creating objects</h3><pre><code>Account acc1 = new Account();
+acc1.NameOnAccount = "Ramu";
+acc1.Balance = 2344.4f;
+
+Account acc2 = new SavingAccount();</code></pre></div>
+      </div>
+      <div class="callout"><b>Teaching point:</b> `Account` is the idea. `acc1` and `acc2` are actual account objects in memory.</div>
+    </section>
+
+    <section id="constructor" class="slide">
+      <div class="slide-title"><div class="num">03</div><h2>Constructors</h2></div>
+      <p class="lead">A constructor is a special method that runs automatically when an object is created.</p>
+      <div class="grid">
+        <div><h3>Default constructor</h3><pre><code>public Account()
+{
+    // Runs when new Account() is called
+}</code></pre></div>
+        <div><h3>Parameterized constructor</h3><pre><code>public Account(string accountNumber,
+               string nameOnAccount,
+               DateTime dateOfBirth,
+               string email,
+               string phone,
+               float balance)
+{
+    AccountNumber = accountNumber;
+    NameOnAccount = nameOnAccount;
+    Balance = balance;
+}</code></pre></div>
+      </div>
+      <h3>Constructor in derived classes</h3>
+      <pre><code>internal class SavingAccount : Account
+{
+    public SavingAccount()
+    {
+        AccountType = AccType.SavingAccount;
+        Balance = 100.0f;
+    }
+}</code></pre>
+      <div class="success"><b>Example:</b> When you create `new SavingAccount()`, the account type and opening balance are automatically set.</div>
+    </section>
+
+    <section id="encapsulation" class="slide">
+      <div class="slide-title"><div class="num">04</div><h2>Encapsulation</h2></div>
+      <p class="lead">Encapsulation means keeping data and behavior together, and controlling how the data is accessed.</p>
+      <div class="grid">
+        <div class="mini"><h4>Data</h4><p>`AccountNumber`, `NameOnAccount`, `Email`, `Phone`, `Balance`</p></div>
+        <div class="mini"><h4>Behavior</h4><p>`ToString()`, `CompareTo()`, `Equals()`, repository create/update/delete methods</p></div>
+      </div>
+      <pre><code>public float Balance { get; set; }</code></pre>
+      <div class="warning"><b>Improvement idea:</b> In real banking apps, `Balance` should not be freely set from outside. Use private setter and methods like `Deposit()` and `Withdraw()`.</div>
+      <pre><code>public float Balance { get; private set; }
+
+public void Deposit(float amount)
+{
+    if (amount <= 0) throw new ArgumentException("Invalid amount");
+    Balance += amount;
+}</code></pre>
+    </section>
+
+    <section id="inheritance" class="slide">
+      <div class="slide-title"><div class="num">05</div><h2>Inheritance</h2></div>
+      <p class="lead">Inheritance allows a child class to reuse and extend a parent class.</p>
+      <div class="diagram"><span class="box">Account</span><span class="arrow">↙</span><span class="box">SavingAccount</span><span class="arrow">↘</span><span class="box">CurrentAccount</span></div>
+      <pre><code>internal class CurrentAccount : Account
+{
+    public CurrentAccount()
+    {
+        AccountType = AccType.CurrentAccount;
+        Balance = 0.0f;
+    }
+}</code></pre>
+      <div class="callout"><b>Meaning:</b> `SavingAccount` and `CurrentAccount` automatically get the properties of `Account`, such as `AccountNumber`, `NameOnAccount`, `Email`, and `Balance`.</div>
+    </section>
+
+    <section id="polymorphism" class="slide">
+      <div class="slide-title"><div class="num">06</div><h2>Polymorphism: Static and Dynamic</h2></div>
+      <p class="lead">Polymorphism means one name or reference can behave in different ways.</p>
+      <div class="grid">
+        <div class="mini"><h4>Static Polymorphism</h4><p>Compile-time. Achieved by method overloading or operator overloading.</p></div>
+        <div class="mini"><h4>Dynamic Polymorphism</h4><p>Runtime. Achieved by method overriding using `virtual` and `override`.</p></div>
+      </div>
+      <h3>Static polymorphism: operator overloading from your project</h3>
+      <pre><code>public static bool operator ==(Account a, Account b)
+{
+    return a.AccountNumber == b.AccountNumber;
+}
+
+public static bool operator !=(Account a, Account b)
+{
+    return a.AccountNumber != b.AccountNumber;
+}</code></pre>
+      <h3>Dynamic polymorphism: suggested improvement</h3>
+      <pre><code>internal class Account
+{
+    public virtual float CalculateMinimumBalance()
+    {
+        return 0;
+    }
+}
+
+internal class SavingAccount : Account
+{
+    public override float CalculateMinimumBalance()
+    {
+        return 100;
+    }
+}
+
+Account account = new SavingAccount();
+Console.WriteLine(account.CalculateMinimumBalance()); // 100</code></pre>
+    </section>
+
+    <section id="interfaces" class="slide">
+      <div class="slide-title"><div class="num">07</div><h2>Interfaces</h2></div>
+      <p class="lead">An interface is a contract. It says what a class must do, but not how it must do it.</p>
+      <div class="grid">
+        <div><h3>Customer interaction contract</h3><pre><code>internal interface ICustomerInteract
+{
+    Account OpensAccount();
+    void PrintAccountDetails(string accountNumber);
+}</code></pre></div>
+        <div><h3>Implementation</h3><pre><code>internal class CustomerService : ICustomerInteract
+{
+    public Account OpensAccount()
+    {
+        // collect details and create account
+    }
+
+    public void PrintAccountDetails(string accountNumber)
+    {
+        // print account details
+    }
+}</code></pre></div>
+      </div>
+      <h3>Generic repository interface</h3>
+      <pre><code>internal interface IRepository&lt;K,T&gt; where T : class
+{
+    T Create(T item);
+    T? GetAccount(K key);
+    List&lt;T&gt;? GetAccounts();
+    T? Update(K key, T item);
+    T? Delete(K key);
+}</code></pre>
+      <div class="success"><b>Why it is useful:</b> `Program` can depend on `ICustomerInteract`, not directly on `CustomerService`. This makes code flexible and easier to test.</div>
+    </section>
+
+    <section id="abstract" class="slide">
+      <div class="slide-title"><div class="num">08</div><h2>Abstract Class</h2></div>
+      <p class="lead">An abstract class is a partially complete base class. It can provide common code and force child classes to complete missing parts.</p>
+      <pre><code>internal abstract class AbstractRepository&lt;K, T&gt; : IRepository&lt;K, T&gt; where T : class
+{
+    protected Dictionary&lt;K, T&gt; _items;
+
+    public abstract T Create(T item);
+
+    public T? GetAccount(K key)
+    {
+        if (_items.ContainsKey(key))
+            return _items[key];
+        return null;
+    }
+}</code></pre>
+      <h3>Child class completes the abstract method</h3>
+      <pre><code>internal class AccountRepository : AbstractRepository&lt;string, Account&gt;
+{
+    public override Account Create(Account item)
+    {
+        // generate account number and add to dictionary
+        return item;
+    }
+}</code></pre>
+      <table class="table"><tr><th>Interface</th><th>Abstract Class</th></tr><tr><td>Only defines a contract.</td><td>Can define common fields and reusable methods.</td></tr><tr><td>A class can implement many interfaces.</td><td>A class can inherit only one class.</td></tr><tr><td>Example: `IRepository&lt;K,T&gt;`</td><td>Example: `AbstractRepository&lt;K,T&gt;`</td></tr></table>
+    </section>
+
+    <section id="indexer" class="slide">
+      <div class="slide-title"><div class="num">09</div><h2>Indexer</h2></div>
+      <p class="lead">An indexer allows an object to be accessed like an array using square brackets.</p>
+      <pre><code>internal class AccountRepository : AbstractRepository&lt;string, Account&gt;
+{
+    public Account this[string index]
+    {
+        get { return _items[index]; }
+        set { _items[index] = value; }
+    }
+}</code></pre>
+      <h3>How to use it</h3>
+      <pre><code>AccountRepository repo = new AccountRepository();
+Account account = new SavingAccount();
+account.AccountNumber = "1001";
+
+repo["1001"] = account;       // calls set
+Account result = repo["1001"]; // calls get</code></pre>
+      <div class="callout"><b>Teaching point:</b> Internally it uses a `Dictionary`, but externally it gives a clean array-like syntax.</div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-title"><div class="num">10</div><h2>Partial Class, Enum, Generics, and Object Class Methods</h2></div>
+      <div class="grid">
+        <div class="mini"><h4>Partial Class</h4><p>Your `Account` class is split across `Account.cs` and `Account1.cs` using `partial`.</p><pre><code>internal partial class Account { }</code></pre></div>
+        <div class="mini"><h4>Enum</h4><p>`AccType` gives meaningful names instead of magic numbers.</p><pre><code>public enum AccType
+{
+    SavingAccount = 1,
+    CurrentAccount = 2
+}</code></pre></div>
+        <div class="mini"><h4>Generics</h4><p>`IRepository&lt;K,T&gt;` can work with different key and entity types.</p><pre><code>IRepository&lt;string, Account&gt;</code></pre></div>
+        <div class="mini"><h4>ToString Override</h4><p>Used to print account details cleanly.</p><pre><code>public override string ToString()
+{
+    return $"Account Number: {AccountNumber}";
+}</code></pre></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-title"><div class="num">11</div><h2>OOP Principles Mapped to Your Project</h2></div>
+      <table class="table">
+        <tr><th>Concept</th><th>Where seen in project</th><th>Simple explanation</th></tr>
+        <tr><td>Class</td><td>`Account`, `CustomerService`, `AccountRepository`</td><td>Blueprint for objects.</td></tr>
+        <tr><td>Object</td><td>`new Account()`, `new SavingAccount()`</td><td>Real instance of a class.</td></tr>
+        <tr><td>Constructor</td><td>`Account()`, `SavingAccount()`</td><td>Initializes object values.</td></tr>
+        <tr><td>Inheritance</td><td>`SavingAccount : Account`</td><td>Child class reuses parent class.</td></tr>
+        <tr><td>Interface</td><td>`ICustomerInteract`, `IRepository&lt;K,T&gt;`</td><td>Defines rules/contracts.</td></tr>
+        <tr><td>Abstract class</td><td>`AbstractRepository&lt;K,T&gt;`</td><td>Common reusable base with abstract method.</td></tr>
+        <tr><td>Static polymorphism</td><td>`operator ==`, `operator !=`</td><td>Compile-time behavior variation.</td></tr>
+        <tr><td>Dynamic polymorphism</td><td>Can be added with `virtual`/`override`</td><td>Runtime behavior variation.</td></tr>
+        <tr><td>Indexer</td><td>`repo["1001"]`</td><td>Object accessed like an array.</td></tr>
+      </table>
+    </section>
+
+    <section id="quiz" class="slide">
+      <div class="slide-title"><div class="num">12</div><h2>Quiz Questions</h2></div>
+      <p class="lead">Use these questions at the end of your session. Click “Check Answers” to evaluate.</p>
+      <div id="quizBox"></div>
+      <button class="btn" onclick="checkQuiz()">Check Answers</button>
+      <div id="score" class="result"></div>
+    </section>
+
+    <section id="summary" class="slide">
+      <div class="slide-title"><div class="num">13</div><h2>Trainer Summary</h2></div>
+      <div class="grid">
+        <div class="mini"><h4>Best explanation flow</h4><p>Start with `Account`, create objects, show constructors, then move to inheritance with `SavingAccount` and `CurrentAccount`.</p></div>
+        <div class="mini"><h4>Then explain design</h4><p>Use `ICustomerInteract` and `IRepository` to explain contracts. Use `AbstractRepository` to explain reusable base logic.</p></div>
+        <div class="mini"><h4>Advanced part</h4><p>Explain indexer, operator overloading, generics, partial classes, and dynamic polymorphism improvement.</p></div>
+        <div class="mini"><h4>Assignment idea</h4><p>Ask students to add `Deposit`, `Withdraw`, `CalculateInterest`, and override behavior for savings/current accounts.</p></div>
+      </div>
+      <div class="callout"><b>Final teaching line:</b> OOP helps us model real-world business concepts as reusable, maintainable, and testable software components.</div>
+    </section>
+  </main>
+
+  <div class="footer">Created for the UnderstandingOOPSApp C# project • Slide-like HTML learning page</div>
+
+  <script>
+    const questions = [
+      {q:'Which class is the parent/base class for SavingAccount and CurrentAccount?', a:['Account','CustomerService','IRepository','Program'], correct:0},
+      {q:'What is the purpose of a constructor?', a:['To delete an object','To initialize an object when it is created','To compile the project','To create an interface'], correct:1},
+      {q:'Which concept is shown by SavingAccount : Account?', a:['Encapsulation','Inheritance','Indexer','Exception handling'], correct:1},
+      {q:'Which project file shows an indexer?', a:['AccountRepository.cs','Program.cs','ICustomerInteract.cs','SavingAccount.cs'], correct:0},
+      {q:'operator == in Account is an example of which type of polymorphism?', a:['Dynamic polymorphism','Static polymorphism','No polymorphism','Abstraction only'], correct:1},
+      {q:'Which keyword is used to make a class partially implemented and not directly creatable?', a:['interface','abstract','partial','sealed'], correct:1},
+      {q:'Which project concept defines a contract for Create, Update, Delete, and Get methods?', a:['Enum','IRepository<K,T>','ToString','Constructor'], correct:1},
+      {q:'How do we usually implement dynamic polymorphism in C#?', a:['static fields','virtual and override','using only private variables','using enum'], correct:1},
+      {q:'What does encapsulation mainly help with?', a:['Grouping data and behavior and controlling access','Making code run without compiler','Creating only static methods','Avoiding all classes'], correct:0},
+      {q:'What is the benefit of using an interface like ICustomerInteract in Program.cs?', a:['It tightly couples Program to CustomerService','It makes the code more flexible and testable','It removes the need for classes','It prevents object creation'], correct:1}
+    ];
+    const quizBox = document.getElementById('quizBox');
+    questions.forEach((item, i) => {
+      const div = document.createElement('div'); div.className='quiz';
+      div.innerHTML = `<p>${i+1}. ${item.q}</p>` + item.a.map((x,j)=>`<label><input type="radio" name="q${i}" value="${j}"> ${x}</label>`).join('');
+      quizBox.appendChild(div);
+    });
+    function checkQuiz(){
+      let score=0;
+      questions.forEach((item,i)=>{
+        const selected = document.querySelector(`input[name=q${i}]:checked`);
+        const labels = document.querySelectorAll(`input[name=q${i}]`);
+        labels.forEach(inp => inp.parentElement.style.borderColor = '#e2e8f0');
+        if(selected){
+          if(Number(selected.value) === item.correct){ score++; selected.parentElement.style.borderColor = '#16a34a'; }
+          else { selected.parentElement.style.borderColor = '#dc2626'; labels[item.correct].parentElement.style.borderColor = '#16a34a'; }
+        } else { labels[item.correct].parentElement.style.borderColor = '#16a34a'; }
+      });
+      document.getElementById('score').innerText = `Your score: ${score} / ${questions.length}`;
+    }
+  </script>
+</body>
+</html>
